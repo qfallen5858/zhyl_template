@@ -31,10 +31,26 @@
 </template>
 
 <script>
+import { login } from '@/api/user'
+
 export default {
   name: 'HelloWorld',
   props: {
     msg: String
+  },
+  mounted() {
+    this.init()
+    console.log(process.env.VUE_APP_BASE_URL)
+  },
+  methods: {
+    init() {
+      login({ username: 'admin' }).then(response => {
+        const { data } = response
+        console.log(data)
+      }).catch(error => {
+        console.error(error)
+      })
+    }
   }
 }
 </script>
