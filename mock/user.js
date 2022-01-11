@@ -7,6 +7,19 @@ const tokens = {
   }
 }
 
+const users = {
+  'admin-token': {
+    deptName: '研发部',
+    nickName: 'admin',
+    roles: ['admin']
+  },
+  'user-token': {
+    deptName: '市场部',
+    nickName: '运营人员',
+    roles: ['user']
+  }
+}
+
 // const users = {
 
 // }
@@ -27,6 +40,25 @@ module.exports = [{
     return {
       code: 20000,
       data: token
+    }
+  }
+},
+{
+  url: '/user/info\.*',
+  type: 'get',
+  response: config => {
+    const { token } = config
+    const info = users[token]
+    console.log(info)
+    if (!info) {
+      return {
+        code: 50008,
+        message: 'Login failed, unable to get user details.'
+      }
+    }
+    return {
+      code: 20000,
+      data: info
     }
   }
 },
